@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+   odoo:
+     container_name: odoo
+     image: odoo:11
+     networks:
+       containers:
+         ipv4_address: 192.168.1.240
+     hostname: odoo
+     domainname: docker.muflone.lan
+     restart: 'no'
+     external_links:
+       - postgres:postgres
+     env_file:
+       - ./database.env
+     volumes:
+       - ./config:/etc/odoo
+       - ./addons:/mnt/extra-addons
+       - ./data:/var/lib/odoo
+
+networks:
+  containers:
+    external: true
+
